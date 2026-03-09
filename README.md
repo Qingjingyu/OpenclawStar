@@ -9,6 +9,7 @@ A clean starter repo for building new OpenClaw instances from a stable baseline.
 - `bootstrap/install_finance_skills.sh`: optional finance extension pack
 - `bootstrap/profiles/`: role profile templates
 - `docs/`: decision notes for the current baseline
+- `skills/`: curated skill library grouped by capability
 
 ## Baseline idea
 A newborn claw should first have four things:
@@ -24,6 +25,7 @@ The default newborn package includes:
 - stable bootstrap scripts
 - workspace skeleton
 - role profile files
+- curated in-repo skills library
 - default recommended skill baseline
 - file-send rule
 
