@@ -1,22 +1,19 @@
 # Initial Claw Baseline
 
-This file defines the recommended day-0 baseline for any new OpenClaw instance.
+This file defines the standard day-0 baseline for any new OpenClaw instance.
 
 ## Goal
-A new claw should be:
-- stable enough to chat immediately
-- able to search, remember, and execute basic work
-- not overloaded with too many experimental capabilities
-- easy to clone into future instances
+A newborn claw should be:
+- pure and stable
+- able to chat immediately
+- able to search, remember, and execute
+- able to send generated files back to the owner
+- free of any forced role or business identity by default
 
 ## Core Principle
-A newborn claw should first have 4 abilities:
-- can talk
-- can search
-- can remember
-- can execute
+A newborn claw is a clean assistant first, not a pre-baked CEO/CTO/team shell.
 
-Everything else is growth, not birth.
+Birth first, specialization later.
 
 ## Birth Baseline
 These are required on day 0.
@@ -51,19 +48,25 @@ Recommended:
 5. Structured memory skeleton
 - workspace memory directory exists
 - daily memory files can be written
-- role profile files exist: `IDENTITY.md`, `SOUL.md`, `AGENTS.md`, `MEMORY.md`
+- neutral baseline files exist: `AGENTS.md`, `SOUL.md`, `IDENTITY.md`, `USER.md`, `MEMORY.md`
+- these files must not preset CEO / CTO / article-writer style identities by default
 
-6. Default recommended skill baseline
-- install the default recommended skill list into the instance itself
+6. Default skill baseline
+- install the standard default skill list into the instance itself
 - bootstrap script: `install_base_skills.sh`
+- default count: `22`
 
 7. File delivery rule
-- all newborn claws should include the file-send rule by default
+- all newborn claws must include the file-send rule by default
 - generated files must be sent to the owner with `message(media=...)`
 - replying with only a path or URL is not enough
 
-## Default Recommended Skill List
-This is now the default recommended installation set for every new claw.
+8. Tool permission baseline
+- set `tools.profile` to `full`
+- avoid the 2026.3.x "can chat but cannot act" regression
+
+## Default Skill List (22)
+This is now the standard default installation set for every new claw.
 
 ### Search and information retrieval
 1. `search`
@@ -85,64 +88,27 @@ This is now the default recommended installation set for every new claw.
 13. `agent-docs`
 14. `automation-workflows`
 
-### Safety and governance
+### Safety and trust
 15. `security-audit`
 16. `trust-verifier`
-17. `skill-vetter`
+17. `agents-skill-security-audit`
+18. `arc-trust-verifier`
+19. `skill-vetter`
 
 ### Built-in utility tools
-18. `slides`
-19. `spreadsheets`
+20. `slides`
+21. `spreadsheets`
 
-## Specialized Extension Packs
-These are useful, but they are not birth abilities.
+### Domain analysis included in birth package
+22. `us-stock-analysis`
 
-### Finance Pack
-Use when a claw is meant to do stock research, investment tracking, or market analysis.
+## Activation Rule
+Default behavior for a new claw:
+- create a pure baseline workspace
+- do not force role templates into the workspace
+- let the owner decide the claw's identity later
 
-- install script: `install_finance_skills.sh`
-- current pack:
-  - `us-stock-analysis`
-
-Rule:
-- finance skills are installed only for finance-oriented claws
-- do not put them into the newborn default list
-- keep the default birth package lean and stable
-
-In simple terms:
-- default package = a smart new assistant
-- finance pack = a trained finance analyst add-on
-
-## Recommended Newborn Profiles
-
-### Profile A: Single Smart Assistant
-Use for most new claws.
-
-- 1 main agent only
-- Feishu DM enabled
-- group reply conservative by default
-- QMD enabled
-- default skill baseline enabled
-
-This is the recommended default.
-
-### Profile B: Execution Worker
-Use for task-specific claws.
-
-- 1 main agent only
-- shorter timeout
-- same default skill baseline
-- focused on execution and reporting
-
-### Profile C: Team Claw
-Use only after the single-agent version is stable.
-
-- multi-agent list enabled
-- CEO/CTO/dev/qa style roles
-- QMD per agent
-- heavier memory and orchestration
-
-Do not use this as the default newborn baseline.
+If a team later wants CEO / CTO / RD profiles, that is an explicit opt-in, not the birth default.
 
 ## Recommended Day-0 Checklist
 1. install pinned OpenClaw
@@ -150,21 +116,21 @@ Do not use this as the default newborn baseline.
 3. write model config
 4. connect Feishu and approve pairing
 5. enable QMD
-6. create memory directories and role profile files
+6. create neutral workspace files
 7. run `install_base_skills.sh`
 8. ensure the file-send rule exists in `AGENTS.md`
-9. run `openclaw doctor --fix`
-10. verify DM ping works
-11. verify one search request works
-12. verify one memory write works
-13. verify one generated file can be sent back to the owner
+9. set `tools.profile=full`
+10. run `openclaw doctor --fix`
+11. verify DM ping works
+12. verify one search request works
+13. verify one memory write works
+14. verify one generated file can be sent back to the owner
 
 ## What Should NOT Be Default
 Do not include these by default unless the claw has a clear mission.
 
-- multi-agent team layout itself
+- multi-agent org chart itself
+- CEO / CTO / article-writer / developer role identity preset
 - Figma-heavy design stack
-- visual audit stack beyond the default list
-- too many overlapping search tools
-- domain-specific experimental skills not in the baseline list
-- finance-domain analysis skills such as `us-stock-analysis`
+- domain-specific experimental skills outside the baseline
+- any business persona that the owner did not explicitly ask for
