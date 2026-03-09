@@ -9,6 +9,50 @@ YOYOO_WORKSPACE="${YOYOO_WORKSPACE:-${YOYOO_HOME}/workspace}"
 YOYOO_PROFILE="${YOYOO_PROFILE:-ceo}"
 YOYOO_ENABLE_BASE_SKILLS="${YOYOO_ENABLE_BASE_SKILLS:-1}"
 YOYOO_INSTALL_FINANCE="${YOYOO_INSTALL_FINANCE:-0}"
+YOYOO_INSTALL_PACKS="${YOYOO_INSTALL_PACKS:-}"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --home)
+      YOYOO_HOME="$2"
+      YOYOO_WORKSPACE="${YOYOO_HOME}/workspace"
+      shift 2
+      ;;
+    --profile)
+      YOYOO_PROFILE="$2"
+      shift 2
+      ;;
+    --pack|--packs)
+      YOYOO_INSTALL_PACKS="$2"
+      shift 2
+      ;;
+    --finance)
+      YOYOO_INSTALL_FINANCE=1
+      shift
+      ;;
+    --no-base)
+      YOYOO_ENABLE_BASE_SKILLS=0
+      shift
+      ;;
+    --help|-h)
+      cat <<HELP
+Usage:
+  bash install.sh [--profile ceo] [--home /path/to/state] [--pack content,research,dev] [--finance] [--no-base]
+
+Examples:
+  bash install.sh
+  bash install.sh --pack content,research,dev
+  bash install.sh --finance
+  bash install.sh --pack content,research --finance
+HELP
+      exit 0
+      ;;
+    *)
+      echo "[error] unknown arg: $1" >&2
+      exit 1
+      ;;
+  esac
+done
 
 PROFILE_DIR="${BOOTSTRAP_DIR}/profiles/${YOYOO_PROFILE}"
 SHARED_DIR="${BOOTSTRAP_DIR}/profiles/shared"
@@ -43,6 +87,7 @@ fi
 
 base_status=0
 finance_status=0
+packs_status=0
 
 if [[ "${YOYOO_ENABLE_BASE_SKILLS}" == "1" ]]; then
   if YOYOO_HOME="${YOYOO_HOME}" bash "${BOOTSTRAP_DIR}/install_base_skills.sh"; then
@@ -50,10 +95,20 @@ if [[ "${YOYOO_ENABLE_BASE_SKILLS}" == "1" ]]; then
   else
     base_status=$?
     echo "[warn] default base skills were not fully installed" >&2
-    echo "[hint] this repo ships the installer, but some skill sources must already exist on your machine or skill registry" >&2
   fi
 else
   echo "[skip] default base skills disabled"
+fi
+
+if [[ -n "${YOYOO_INSTALL_PACKS}" ]]; then
+  if YOYOO_HOME="${YOYOO_HOME}" bash "${BOOTSTRAP_DIR}/install_pack_skills.sh" "${YOYOO_INSTALL_PACKS}"; then
+    :
+  else
+    packs_status=$?
+    echo "[warn] requested packs were not fully installed" >&2
+  fi
+else
+  echo "[skip] no extra packs requested"
 fi
 
 if [[ "${YOYOO_INSTALL_FINANCE}" == "1" ]]; then
@@ -74,10 +129,11 @@ OpenclawStar init finished.
 - workspace: ${YOYOO_WORKSPACE}
 - profile: ${YOYOO_PROFILE}
 - base skills requested: ${YOYOO_ENABLE_BASE_SKILLS}
+- common packs requested: ${YOYOO_INSTALL_PACKS:-none}
 - finance extension requested: ${YOYOO_INSTALL_FINANCE}
 SUMMARY
 
-if [[ "${base_status}" -ne 0 || "${finance_status}" -ne 0 ]]; then
+if [[ "${base_status}" -ne 0 || "${packs_status}" -ne 0 || "${finance_status}" -ne 0 ]]; then
   cat <<FAIL
 
 Init completed with warnings.
@@ -85,8 +141,8 @@ Init completed with warnings.
 - some skill packs were not fully installed
 
 Next step:
-1. sync the missing skill sources onto this machine
-2. rerun: bash install.sh
+1. check the failing pack name or skill source
+2. rerun: bash install.sh --pack <pack-list>
 3. then connect model and Feishu separately
 FAIL
   exit 1
