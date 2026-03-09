@@ -1,0 +1,9 @@
+.DS_Store
+*.log
+*.bak
+state/
+workspace/
+memory/
+secrets/
+.env
+.env.*
