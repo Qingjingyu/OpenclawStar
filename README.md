@@ -57,13 +57,12 @@ What `install.sh` does:
 ## Important reality check
 `install.sh` can build the newborn skeleton by itself.
 
-But the default skill installer still needs actual skill sources to exist on the machine, or be available from your skill registry. So this repo is:
-- enough to standardize the setup flow
-- not enough to magically invent every third-party skill source
+The installer now uses a safer rule:
+- local skill source first
+- remote URL fallback second
 
-In plain words:
-- this repo gives you the recipe
-- your machine still needs the ingredients
+So in most cases, a new machine can install the default newborn package directly.
+If a remote source disappears in the future, the script will fail loudly instead of pretending everything is fine.
 
 ## Notes
 - Do not commit real API keys, pairing records, chat history, or runtime state.
