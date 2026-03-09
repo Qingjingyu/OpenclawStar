@@ -57,3 +57,9 @@ Validate at least:
 - `memory`: remember users, store knowledge, improve retrieval
 - `dev`: build software, debug issues, enforce code quality
 - `ops`: run workflows, troubleshoot systems, handle infrastructure incidents
+
+
+## Fourth-wave curated areas
+- `design`: Figma, UI system, screenshot, design implementation
+- `documents`: markdown, pdf, ppt, meeting notes, transcript cleanup
+- `evaluation`: fact-checking, QA, security review, eval harness, completion verification

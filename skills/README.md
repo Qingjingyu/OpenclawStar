@@ -24,3 +24,6 @@ Current broad groups:
 - memory
 - dev
 - ops
+- design
+- documents
+- evaluation

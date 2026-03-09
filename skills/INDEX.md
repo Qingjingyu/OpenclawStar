@@ -76,3 +76,29 @@
 - `yoyoo-debug`: 系统排错和问题定位。
 - `yoyoo-workflow`: 自动化流程、定时任务、工作流编排。
 - `cloudflare-troubleshooting`: 排查 Cloudflare 的 DNS、SSL、重定向问题。
+
+
+## Design
+- `design-system-patterns`: 设计系统、token、主题和组件规范。
+- `figma`: Figma API 与设计自动化。
+- `figma-implement-design`: 把 Figma 节点落实成生产级代码。
+- `figma-pixel-replica`: 高还原度实现 Figma 页面。
+- `screenshot`: 桌面截图与系统截图能力。
+- `ui-designer`: 从参考 UI 提炼设计语言。
+- `ui-ux-pro-max`: 更完整的 UI/UX 设计与实现指导。
+
+## Documents
+- `markdown-tools`: 各种文档转 Markdown。
+- `pdf-creator`: 从 Markdown 生成 PDF。
+- `ppt-creator`: 生成专业 PPT。
+- `meeting-minutes-taker`: 把会议转录整理成高质量纪要。
+- `transcript-fixer`: 修正语音转文字错误。
+- `mermaid-tools`: Mermaid 图提取与导出。
+
+## Evaluation
+- `eval-harness`: 正式评估框架。
+- `promptfoo-evaluation`: Promptfoo 评测。
+- `fact-checker`: 事实核查。
+- `qa-expert`: QA 测试流程与测试体系。
+- `verification-before-completion`: 完成前验证，防止嘴上完成。
+- `security-review`: 安全审查。
