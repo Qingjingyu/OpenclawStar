@@ -1,0 +1,24 @@
+{
+  "projectRoot": "/Users/subai/A/A_subai/AIcode/Test/EOTOAI/Test0.09h5ck/EOTOAI/code/web",
+  "tokenEnv": "FIGMA_TOKEN",
+  "fileKey": "hexHZONLy6ZiM6r0j8YImj",
+  "defaults": {
+    "viewport": "375x812",
+    "wait": 1200,
+    "selector": "#root"
+  },
+  "gates": {
+    "maxRmse": 0.09,
+    "requireSmokePass": true,
+    "requireLocaleGuardPass": true
+  },
+  "pages": [
+    {
+      "name": "auth-email",
+      "nodeId": "68:8642",
+      "url": "http://127.0.0.1:5173/auth/email?lang=zh-CN",
+      "preScenario": "/Users/subai/.agents/skills/figma-pixel-replica/assets/page_spec_template.json",
+      "localeGuardScenario": "/Users/subai/.agents/skills/figma-pixel-replica/assets/auth_multilang_guard_template.json"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "baseUrl": "http://127.0.0.1:5173",
+  "routeTemplate": "/auth/email?lang={lang}",
+  "viewport": { "width": 390, "height": 844 },
+  "waitMs": 250,
+  "strict": true,
+  "languages": ["zh-CN", "ja-JP", "en-US"],
+  "routes": [
+    {
+      "urlPattern": "**/api/v2/auth/email/send-code",
+      "method": "POST",
+      "status": 200,
+      "contentType": "application/json",
+      "json": {
+        "code": 0,
+        "message": "OK",
+        "traceId": "mock-locale-report",
+        "data": {
+          "requestId": "req_locale_report",
+          "countdownSec": 30,
+          "debugCode": null
+        }
+      }
+    }
+  ],
+  "preState": {
+    "type": "authOtp",
+    "email": "eotoai@gmail.com",
+    "emailSelector": "#email-input",
+    "agreeSelector": "label[for=\"agree-policy\"] .checkbox-visual",
+    "submitSelector": "button[data-node-id=\"20:422\"]",
+    "readySelector": ".otp-title-block h2"
+  },
+  "lineChecks": [
+    {
+      "name": "title",
+      "selector": ".otp-title-block h2",
+      "maxLines": {
+        "default": 1,
+        "en-US": 2
+      }
+    },
+    {
+      "name": "helper",
+      "selector": ".otp-title-block p",
+      "maxLines": 2
+    },
+    {
+      "name": "resendQuestion",
+      "selector": ".otp-resend-row > span",
+      "maxLines": 1
+    },
+    {
+      "name": "resendAction",
+      "selector": ".otp-resend-btn",
+      "maxLines": 1
+    },
+    {
+      "name": "primaryCta",
+      "selector": ".otp-confirm-btn > span:first-child",
+      "maxLines": 1
+    }
+  ]
+}

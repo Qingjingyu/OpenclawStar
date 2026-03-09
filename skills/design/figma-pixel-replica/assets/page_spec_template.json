@@ -1,0 +1,66 @@
+{
+  "pageName": "sample-auth-email",
+  "baseUrl": "http://127.0.0.1:5173",
+  "route": "/auth/email?lang=zh-CN",
+  "figma": {
+    "fileKey": "replace_with_file_key",
+    "nodeIds": ["68:8642", "68:9678"]
+  },
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "routes": [
+    {
+      "urlPattern": "**/api/v2/auth/email/send-code",
+      "method": "POST",
+      "status": 200,
+      "contentType": "application/json",
+      "json": {
+        "code": 0,
+        "message": "OK",
+        "traceId": "mock",
+        "data": {
+          "requestId": "req_mock",
+          "countdownSec": 30,
+          "debugCode": null
+        }
+      }
+    }
+  ],
+  "states": [
+    "initial",
+    "editing",
+    "submitting",
+    "success",
+    "error"
+  ],
+  "steps": [
+    {
+      "action": "goto",
+      "url": "/auth/email?lang=zh-CN"
+    },
+    {
+      "action": "waitForSelector",
+      "selector": "#email-input"
+    },
+    {
+      "action": "fill",
+      "selector": "#email-input",
+      "value": "demo@example.com"
+    },
+    {
+      "action": "click",
+      "selector": "label.agreement-row"
+    },
+    {
+      "action": "assertEnabled",
+      "selector": "button.send-btn"
+    },
+    {
+      "action": "assertMaxLines",
+      "selector": ".send-btn > span:first-child",
+      "maxLines": 1
+    }
+  ]
+}

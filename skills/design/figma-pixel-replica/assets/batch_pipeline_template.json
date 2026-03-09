@@ -1,0 +1,29 @@
+{
+  "workspaceRoot": ".",
+  "defaults": {
+    "viewport": "375x812",
+    "wait": 1200,
+    "selector": "#root"
+  },
+  "gates": {
+    "maxRmse": 0.09,
+    "requireSmokePass": true,
+    "requireLocaleGuardPass": true
+  },
+  "figmaFetch": {
+    "tokenEnv": "FIGMA_TOKEN",
+    "fileKey": "replace_with_file_key",
+    "nodeIds": ["68:8642", "68:9678"],
+    "bundleDir": "/tmp/figma_bundle",
+    "scales": "1,2,3"
+  },
+  "pages": [
+    {
+      "name": "auth-email",
+      "url": "http://127.0.0.1:5173/auth/email?lang=zh-CN",
+      "figmaImage": "/tmp/figma_bundle/68_8642@3x.png",
+      "scenario": "/Users/subai/.agents/skills/figma-pixel-replica/assets/page_spec_template.json",
+      "localeGuardScenario": "/Users/subai/.agents/skills/figma-pixel-replica/assets/auth_multilang_guard_template.json"
+    }
+  ]
+}

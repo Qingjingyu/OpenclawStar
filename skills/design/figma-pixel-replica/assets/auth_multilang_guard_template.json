@@ -1,0 +1,81 @@
+{
+  "pageName": "auth_multilang_guard",
+  "baseUrl": "",
+  "viewport": { "width": 390, "height": 844 },
+  "routes": [
+    {
+      "urlPattern": "**/api/v2/auth/email/send-code",
+      "method": "POST",
+      "status": 200,
+      "contentType": "application/json",
+      "json": {
+        "code": 0,
+        "message": "OK",
+        "traceId": "mock-auth-guard",
+        "data": {
+          "requestId": "req_mock_guard",
+          "countdownSec": 30,
+          "debugCode": null
+        }
+      }
+    },
+    {
+      "urlPattern": "**/api/v2/auth/line/state",
+      "method": "POST",
+      "status": 200,
+      "contentType": "application/json",
+      "json": {
+        "code": 0,
+        "message": "OK",
+        "traceId": "mock-line-guard",
+        "data": {
+          "state": "mock-state"
+        }
+      }
+    }
+  ],
+  "steps": [
+    { "action": "goto", "url": "http://127.0.0.1:5173/auth/email?lang=zh-CN" },
+    { "action": "waitForSelector", "selector": "#email-input" },
+    { "action": "click", "selector": "button[aria-label=\"line-login\"]" },
+    { "action": "assertTextContains", "selector": ".form-msg.success, .form-msg.error", "text": "LINE" },
+    { "action": "click", "selector": "button[aria-label=\"google-login\"]" },
+    { "action": "assertTextContains", "selector": ".form-msg.error", "text": "Google" },
+
+    { "action": "goto", "url": "http://127.0.0.1:5173/auth/email?lang=zh-CN" },
+    { "action": "waitForSelector", "selector": "#email-input" },
+    { "action": "fill", "selector": "#email-input", "value": "eotoai@gmail.com" },
+    { "action": "click", "selector": "label[for=\"agree-policy\"] .checkbox-visual" },
+    { "action": "click", "selector": "button[data-node-id=\"20:422\"]" },
+    { "action": "waitForSelector", "selector": ".otp-title-block h2" },
+    { "action": "assertMaxLines", "selector": ".otp-title-block h2", "maxLines": 1 },
+    { "action": "assertMaxLines", "selector": ".otp-title-block p", "maxLines": 2 },
+    { "action": "assertMaxLines", "selector": ".otp-resend-row > span", "maxLines": 1 },
+    { "action": "assertMaxLines", "selector": ".otp-resend-btn", "maxLines": 1 },
+    { "action": "assertMaxLines", "selector": ".otp-confirm-btn > span:first-child", "maxLines": 1 },
+
+    { "action": "goto", "url": "http://127.0.0.1:5173/auth/email?lang=ja-JP" },
+    { "action": "waitForSelector", "selector": "#email-input" },
+    { "action": "fill", "selector": "#email-input", "value": "eotoai@gmail.com" },
+    { "action": "click", "selector": "label[for=\"agree-policy\"] .checkbox-visual" },
+    { "action": "click", "selector": "button[data-node-id=\"20:422\"]" },
+    { "action": "waitForSelector", "selector": ".otp-title-block h2" },
+    { "action": "assertMaxLines", "selector": ".otp-title-block h2", "maxLines": 1 },
+    { "action": "assertMaxLines", "selector": ".otp-title-block p", "maxLines": 2 },
+    { "action": "assertMaxLines", "selector": ".otp-resend-row > span", "maxLines": 1 },
+    { "action": "assertMaxLines", "selector": ".otp-resend-btn", "maxLines": 1 },
+    { "action": "assertMaxLines", "selector": ".otp-confirm-btn > span:first-child", "maxLines": 1 },
+
+    { "action": "goto", "url": "http://127.0.0.1:5173/auth/email?lang=en-US" },
+    { "action": "waitForSelector", "selector": "#email-input" },
+    { "action": "fill", "selector": "#email-input", "value": "eotoai@gmail.com" },
+    { "action": "click", "selector": "label[for=\"agree-policy\"] .checkbox-visual" },
+    { "action": "click", "selector": "button[data-node-id=\"20:422\"]" },
+    { "action": "waitForSelector", "selector": ".otp-title-block h2" },
+    { "action": "assertMaxLines", "selector": ".otp-title-block h2", "maxLines": 2 },
+    { "action": "assertMaxLines", "selector": ".otp-title-block p", "maxLines": 2 },
+    { "action": "assertMaxLines", "selector": ".otp-resend-row > span", "maxLines": 1 },
+    { "action": "assertMaxLines", "selector": ".otp-resend-btn", "maxLines": 1 },
+    { "action": "assertMaxLines", "selector": ".otp-confirm-btn > span:first-child", "maxLines": 1 }
+  ]
+}
