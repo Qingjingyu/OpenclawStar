@@ -29,6 +29,7 @@ YOYOO_EXPECT_FEISHU_REQUIRE_MENTION="${YOYOO_EXPECT_FEISHU_REQUIRE_MENTION:-}"
 YOYOO_EXPECT_FEISHU_UNIFIED_SESSION="${YOYOO_EXPECT_FEISHU_UNIFIED_SESSION:-}"
 YOYOO_FREEZE_BASELINE_ON_ACTIVATION="${YOYOO_FREEZE_BASELINE_ON_ACTIVATION:-0}"
 YOYOO_PROFILE="${YOYOO_PROFILE:-}"
+YOYOO_USE_ROLE_PROFILE="${YOYOO_USE_ROLE_PROFILE:-0}"
 OPENCLAW_SYSTEMD_UNIT="${OPENCLAW_SYSTEMD_UNIT:-}"
 YOYOO_EMPLOYEE_KEY="${YOYOO_EMPLOYEE_KEY:-}"
 YOYOO_ASSET_ROOT="${YOYOO_ASSET_ROOT:-/srv/yoyoo}"
@@ -125,6 +126,84 @@ apply_asset_permissions() {
     chown -R "${YOYOO_LINUX_USER}:${YOYOO_LINUX_GROUP}" "${YOYOO_HOME}" "${YOYOO_WORKSPACE}" "${YOYOO_RUNTIME_HOME}" >/tmp/yoyoo_bootstrap_chown.log 2>&1 || true
     chmod 700 "${YOYOO_HOME}" "${YOYOO_WORKSPACE}" "${YOYOO_RUNTIME_HOME}" >/tmp/yoyoo_bootstrap_chmod.log 2>&1 || true
   fi
+}
+
+
+ensure_file_send_rule() {
+  local agents_file="$1"
+  if grep -q 'message(media="/绝对路径/文件名")' "${agents_file}" 2>/dev/null; then
+    return 0
+  fi
+  cat >> "${agents_file}" <<'EOF'
+
+## 文件发送规则（默认开启，必须执行）
+1. 一旦生成任何文件，必须立即调用 `message(media="/绝对路径/文件名")` 发送给主人。
+2. 不要只回复文件路径或 URL，路径对用户不可见，等于没干活。
+3. 文件必须存放在你自己的 workspace 目录下，确保能够被正确发送。
+EOF
+}
+
+write_neutral_workspace_files() {
+  mkdir -p "${YOYOO_WORKSPACE}"
+
+  if [[ ! -f "${YOYOO_WORKSPACE}/IDENTITY.md" ]]; then
+    cat > "${YOYOO_WORKSPACE}/IDENTITY.md" <<'EOF'
+# IDENTITY.md
+
+你是一个纯净的新小龙虾实例。
+默认没有预设职业、岗位、人格或业务身份。
+你的基础能力来自：
+- OpenClaw 本体
+- QMD 记忆
+- 默认预装 skill
+
+后续身份与职责，由主人再定义。
+EOF
+  fi
+
+  if [[ ! -f "${YOYOO_WORKSPACE}/SOUL.md" ]]; then
+    cat > "${YOYOO_WORKSPACE}/SOUL.md" <<'EOF'
+# SOUL.md
+
+1. 先理解任务，再执行。
+2. 先给结论，再补细节。
+3. 不编造，不装懂。
+4. 不确定就先验证。
+5. 缺能力时，先检查已安装 skill，再去技能仓库找。
+EOF
+  fi
+
+  if [[ ! -f "${YOYOO_WORKSPACE}/USER.md" ]]; then
+    cat > "${YOYOO_WORKSPACE}/USER.md" <<'EOF'
+# USER.md
+
+这里记录主人的偏好、目标、工作方式。
+默认留空，等主人自己补。
+EOF
+  fi
+
+  if [[ ! -f "${YOYOO_WORKSPACE}/MEMORY.md" ]]; then
+    cat > "${YOYOO_WORKSPACE}/MEMORY.md" <<'EOF'
+# MEMORY.md
+
+长期记忆先保持为空。
+后续在真实协作中逐步沉淀。
+EOF
+  fi
+
+  if [[ ! -f "${YOYOO_WORKSPACE}/AGENTS.md" ]]; then
+    cat > "${YOYOO_WORKSPACE}/AGENTS.md" <<'EOF'
+# AGENTS.md
+
+## 默认原则
+1. 你是一个纯净实例，默认没有预设角色身份。
+2. 先完成主人的明确任务，再做主动辅助。
+3. 需要新能力时，先检查当前已安装 skill；如果没有，再去技能仓库寻找。
+4. 所有输出都要可验证，少空话，多结果。
+EOF
+  fi
+
+  ensure_file_send_rule "${YOYOO_WORKSPACE}/AGENTS.md"
 }
 
 wait_for_http() {
@@ -511,10 +590,16 @@ fi
 install -m 600 "${CONFIG_MERGED_FILE}" "${OPENCLAW_CONFIG_FILE}"
 install -m 600 "${OPENCLAW_CONFIG_FILE}" "${OPENCLAW_GOLDEN_CONFIG_FILE}"
 
-if compgen -G "${SCRIPT_DIR}/profiles/${YOYOO_ROLE}/*.md" >/dev/null 2>&1; then
-  cp -f "${SCRIPT_DIR}/profiles/${YOYOO_ROLE}/"*.md "${YOYOO_WORKSPACE}/"
+if [[ "${YOYOO_USE_ROLE_PROFILE}" == "1" ]]; then
+  if compgen -G "${SCRIPT_DIR}/profiles/${YOYOO_ROLE}/*.md" >/dev/null 2>&1; then
+    cp -f "${SCRIPT_DIR}/profiles/${YOYOO_ROLE}/"*.md "${YOYOO_WORKSPACE}/"
+    ensure_file_send_rule "${YOYOO_WORKSPACE}/AGENTS.md"
+  else
+    echo "[Yoyoo] WARN: role profile templates not found for ${YOYOO_ROLE} under ${SCRIPT_DIR}/profiles; falling back to neutral workspace files." >&2
+    write_neutral_workspace_files
+  fi
 else
-  echo "[Yoyoo] WARN: role profile templates not found for ${YOYOO_ROLE} under ${SCRIPT_DIR}/profiles; keep existing workspace identity files." >&2
+  write_neutral_workspace_files
 fi
 mkdir -p "${YOYOO_WORKSPACE}/memory"
 today_file="${YOYOO_WORKSPACE}/memory/$(date +%F).md"
