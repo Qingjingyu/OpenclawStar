@@ -84,3 +84,8 @@ If a remote source disappears in the future, the script will fail loudly instead
 bash install.sh --pack design,documents,evaluation
 bash install.sh --pack content,research --finance
 ```
+
+
+## Learning Map
+For ecosystem study and source prioritization, start here:
+- `docs/114_OpenClaw_学习地图_2026-03-09.md`

@@ -63,3 +63,16 @@ Validate at least:
 - `design`: Figma, UI system, screenshot, design implementation
 - `documents`: markdown, pdf, ppt, meeting notes, transcript cleanup
 - `evaluation`: fact-checking, QA, security review, eval harness, completion verification
+
+
+## Official and Ecosystem Sources
+Use these as the default study path:
+- official site: `https://openclaw.ai/`
+- official docs: `https://docs.openclaw.ai/start/getting-started`
+- official code: `https://github.com/openclaw/openclaw`
+- official skill market: `https://clawhub.ai/`
+- large skill index: `https://github.com/VoltAgent/awesome-openclaw-skills`
+- use case index: `https://github.com/hesamsheikh/awesome-openclaw-usecases`
+- broader skill directory: `https://skills.sh/`
+- Chinese learning/reference: `https://botlearn.ai/zh`, `https://github.com/Zolobaby/docs-openclaw`, `https://claw123.ai/`
+- evolution research line: `https://evomap.ai/wiki`, `https://evomap.ai/blog`, `https://github.com/EvoMap/evolver`
