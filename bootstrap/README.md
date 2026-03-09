@@ -4,21 +4,30 @@ This folder defines Yoyoo 1.0.1 employee activation baseline.
 
 ## Zero-Config Entry (Recommended)
 
-For end users, run from repo root:
+From repo root:
 
 ```bash
+export YOYOO_HOME=/root/.openclaw
+export YOYOO_PROFILE=ceo
 bash install.sh
 ```
 
-It will prompt for `MINIMAX_API_KEY` (if not set), then activate **single mode** automatically:
-- one Gateway (`:18789`)
-- CEO as `main`
-- CTO as `cto` agent under the same Gateway
-- default execution policy: `YOYOO_EXECUTION_PROFILE=balanced` (AI smart routing)
-- default force flag: `YOYOO_EXECUTION_FORCE_SUBAGENT=0`
-- install wizard can also set:
-  - `YOYOO_MODE`: `single` / `dual`
-  - `YOYOO_EXECUTION_PROFILE`: `lean` / `balanced` / `aggressive`
+This initializer does the safe newborn setup only:
+- creates the workspace skeleton
+- copies role profile files
+- installs the default base skills
+- optionally installs the finance extension pack
+
+It does **not** automatically write real model keys or chat-channel secrets. Those stay as a separate step, which is safer and easier to audit.
+
+Optional finance pack:
+
+```bash
+export YOYOO_HOME=/root/.openclaw
+export YOYOO_PROFILE=ceo
+export YOYOO_INSTALL_FINANCE=1
+bash install.sh
+```
 
 ## Goal
 Any new employee activated from Git should get the same default stack:
