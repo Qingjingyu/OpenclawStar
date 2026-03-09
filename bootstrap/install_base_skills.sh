@@ -2,7 +2,11 @@
 set -euo pipefail
 
 # Install the default recommended skill baseline for a newborn OpenClaw instance.
-# Copies skills into ${YOYOO_HOME}/skills so each instance has its own stable baseline.
+# Local sources are preferred. Remote URLs are used as the fallback.
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=bootstrap/skill_sources.sh
+source "${SCRIPT_DIR}/skill_sources.sh"
 
 YOYOO_HOME="${YOYOO_HOME:-/root/.openclaw}"
 TARGET_DIR="${YOYOO_HOME}/skills"
@@ -30,31 +34,33 @@ DEFAULT_SKILLS=(
   spreadsheets
 )
 
-CANDIDATE_ROOTS=(
-  "${HOME}/.agents/skills"
-  "${HOME}/.openclaw/skills"
-  "${HOME}/.codex/skills/.system"
-)
-
-install_one() {
+fetch_remote_skill() {
   local name="$1"
-  local src=""
-  local root=""
-  for root in "${CANDIDATE_ROOTS[@]}"; do
-    if [[ -d "${root}/${name}" && -f "${root}/${name}/SKILL.md" ]]; then
-      src="${root}/${name}"
-      break
-    fi
-  done
+  local url=""
+  url="$(get_remote_skill_url "${name}")"
 
-  if [[ -z "${src}" ]]; then
-    echo "[warn] skill not found: ${name}" >&2
+  if [[ -z "${url}" ]]; then
+    echo "[warn] no remote source configured for ${name}" >&2
     return 1
   fi
 
   rm -rf "${TARGET_DIR:?}/${name}"
-  cp -R "${src}" "${TARGET_DIR}/${name}"
-  echo "[ok] ${name} <= ${src}"
+  mkdir -p "${TARGET_DIR}/${name}"
+  curl -L --fail --max-time 30 -fsSL "${url}" -o "${TARGET_DIR}/${name}/SKILL.md"
+  echo "[ok] ${name} <= ${url}"
+}
+
+install_one() {
+  local name="$1"
+  local src=""
+  if src="$(find_local_skill_source "${name}")"; then
+    rm -rf "${TARGET_DIR:?}/${name}"
+    cp -R "${src}" "${TARGET_DIR}/${name}"
+    echo "[ok] ${name} <= ${src}"
+    return 0
+  fi
+
+  fetch_remote_skill "${name}"
 }
 
 failures=0
