@@ -9,3 +9,15 @@ Principles:
 - if a skill is not here, the claw can still search other sources
 
 Use `skills/INDEX.md` first.
+
+Current broad groups:
+- search
+- content
+- research
+- connectors
+- growth
+- coordination
+- automation
+- governance
+- system
+- finance

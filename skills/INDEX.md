@@ -38,3 +38,23 @@
 - newborn default skills: use the baseline installer
 - domain skills: install only when the claw has that mission
 - if a skill is missing here, check `skills/external-sources/README.md`
+
+
+## Content
+- `bilibili-youtube-watcher`: 抓取 B 站和 YouTube 字幕，适合视频速读。通常免 key。
+- `youtube-ultimate`: YouTube 下载、字幕和视频探索。通常免 key。
+- `x-fetcher`: X/Twitter 抓取与搜索增强。通常需要 cookie 或第三方通道。
+- `twitter-reader`: 按链接读取推文内容。适合轻量读取，通常免 key。
+
+## Research
+- `brave-search`: Brave 搜索。通常需要 Brave API key。
+- `crawl-for-ai`: 用 Crawl4AI 抓复杂网页。通常需要本地 Crawl4AI 实例。
+- `ddg-web-search`: DuckDuckGo Lite 搜索。通常免 key。
+- `firecrawl-search`: Firecrawl 搜索与抓取。通常需要 Firecrawl key。
+- `ghostfetch`: 命令行网页搜索和抓取。通常免 key。
+- `reddit-api`: 搜 Reddit 讨论、社区和评论。看接入方式，通常建议有 API 或索引源。
+- `tavily-search`: Tavily AI 搜索。需要 Tavily key。
+- `web-search-exa`: Exa 搜索。需要 Exa key。
+
+## Connectors
+- `agent-reach`: 给龙虾接更多平台通道，比如 X、Reddit、YouTube、GitHub、小红书等。是“接线层”，通常按平台分别配置 key、cookie 或账号。

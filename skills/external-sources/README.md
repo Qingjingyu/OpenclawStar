@@ -33,3 +33,21 @@ Validate at least:
 - purpose
 - whether it needs key/cookie/account
 - whether it can execute commands or access external systems
+
+
+## Typical requirement patterns
+- free / low-friction:
+  - `ddg-web-search`
+  - `ghostfetch`
+  - `twitter-reader`
+  - parts of `youtube-ultimate`
+- often needs API key:
+  - `brave-search`
+  - `tavily-search`
+  - `firecrawl-search`
+  - `web-search-exa`
+- often needs cookie / account / channel setup:
+  - `x-fetcher`
+  - `agent-reach`
+- often needs local runtime service:
+  - `crawl-for-ai`
