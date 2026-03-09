@@ -58,3 +58,21 @@
 
 ## Connectors
 - `agent-reach`: 给龙虾接更多平台通道，比如 X、Reddit、YouTube、GitHub、小红书等。是“接线层”，通常按平台分别配置 key、cookie 或账号。
+
+
+## Memory
+- `yoyoo-memory`: 统一记忆系统。适合沉淀长期记忆、共享偏好和历史信息。
+- `yoyoo-knowledge`: 知识库增强。适合做结构化知识存储、检索和 RAG。
+
+## Dev
+- `backend-patterns`: 后端架构和 API 设计最佳实践。
+- `frontend-patterns`: 前端架构、性能和 React/Next 模式。
+- `coding-standards`: 通用代码规范，保证代码更稳更整洁。
+- `systematic-debugging`: 遇到 bug 先找根因，不乱修。
+- `tdd-workflow`: 用测试驱动开发新功能和修 bug。
+- `github-ops`: 处理 GitHub 仓库、PR、issue、workflow。
+
+## Ops
+- `yoyoo-debug`: 系统排错和问题定位。
+- `yoyoo-workflow`: 自动化流程、定时任务、工作流编排。
+- `cloudflare-troubleshooting`: 排查 Cloudflare 的 DNS、SSL、重定向问题。

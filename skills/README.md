@@ -21,3 +21,6 @@ Current broad groups:
 - governance
 - system
 - finance
+- memory
+- dev
+- ops

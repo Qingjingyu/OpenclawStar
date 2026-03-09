@@ -51,3 +51,9 @@ Validate at least:
   - `agent-reach`
 - often needs local runtime service:
   - `crawl-for-ai`
+
+
+## Third-wave curated areas
+- `memory`: remember users, store knowledge, improve retrieval
+- `dev`: build software, debug issues, enforce code quality
+- `ops`: run workflows, troubleshoot systems, handle infrastructure incidents
