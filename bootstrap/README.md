@@ -20,6 +20,14 @@ This initializer does the safe newborn setup only:
 
 It does **not** automatically write real model keys or chat-channel secrets. Those stay as a separate step, which is safer and easier to audit.
 
+Optional named packs:
+
+```bash
+export YOYOO_HOME=/root/.openclaw
+export YOYOO_PROFILE=ceo
+bash install.sh --pack content,research,dev
+```
+
 Optional finance pack:
 
 ```bash
@@ -362,3 +370,15 @@ Checks included:
 - `acceptance_check.sh`: one-click acceptance checks (probe/session/auth/log signatures).
 - `profiles/*`: role identity/soul/memory/contract templates.
 - `registry/capability-catalog.yaml`: baseline/optional capability governance.
+
+Available packs:
+- content
+- research
+- connectors
+- memory
+- dev
+- ops
+- design
+- documents
+- evaluation
+- finance

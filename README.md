@@ -41,6 +41,13 @@ export YOYOO_PROFILE=ceo
 bash install.sh
 ```
 
+With optional packs:
+```bash
+export YOYOO_HOME=/root/.openclaw-f
+export YOYOO_PROFILE=ceo
+bash install.sh --pack content,research,dev
+```
+
 With optional finance extension:
 ```bash
 export YOYOO_HOME=/root/.openclaw-f
@@ -53,6 +60,7 @@ What `install.sh` does:
 - creates the workspace directories
 - copies the selected role template
 - installs the default base skills
+- optionally installs named common packs
 - optionally installs the finance extension pack
 - keeps existing profile files if they already exist
 
@@ -70,3 +78,9 @@ If a remote source disappears in the future, the script will fail loudly instead
 - Do not commit real API keys, pairing records, chat history, or runtime state.
 - This repo stores reproducible capability templates, not live instance data.
 - `install.sh` prepares the newborn claw skeleton. Model config and channel config still need to be connected separately.
+
+## More pack examples
+```bash
+bash install.sh --pack design,documents,evaluation
+bash install.sh --pack content,research --finance
+```

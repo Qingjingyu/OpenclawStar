@@ -73,3 +73,12 @@ Future examples:
 Rule:
 - install only when the claw has a clear domain mission
 - keep industry packs independent from the birth pack
+
+
+## Install by Pack
+Examples:
+```bash
+bash install.sh --pack content,research,dev
+bash install.sh --pack design,documents,evaluation
+bash install.sh --pack content,research --finance
+```
