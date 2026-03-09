@@ -18,9 +18,12 @@ DEFAULT_BIRTH_SKILLS=(
   automation-workflows
   security-audit
   trust-verifier
+  agents-skill-security-audit
+  arc-trust-verifier
   skill-vetter
   slides
   spreadsheets
+  us-stock-analysis
 )
 
 PACK_content=(

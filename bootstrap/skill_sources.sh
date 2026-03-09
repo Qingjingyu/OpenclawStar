@@ -15,6 +15,7 @@ CANDIDATE_ROOTS=(
   "${OPENCLAWSTAR_SKILLS_ROOT}"
   "${HOME}/.agents/skills"
   "${HOME}/.openclaw/skills"
+  "${HOME}/.codex/skills"
   "${HOME}/.codex/skills/.system"
 )
 
