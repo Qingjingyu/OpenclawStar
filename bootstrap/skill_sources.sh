@@ -2,9 +2,17 @@
 set -euo pipefail
 
 # Shared skill source registry for OpenclawStar bootstrap scripts.
-# Local sources are always preferred. Remote URLs are the fallback.
+# Search order:
+# 1. curated skills inside this repo
+# 2. local machine skill directories
+# 3. remote URLs as fallback
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+OPENCLAWSTAR_REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+OPENCLAWSTAR_SKILLS_ROOT="${OPENCLAWSTAR_REPO_ROOT}/skills"
 
 CANDIDATE_ROOTS=(
+  "${OPENCLAWSTAR_SKILLS_ROOT}"
   "${HOME}/.agents/skills"
   "${HOME}/.openclaw/skills"
   "${HOME}/.codex/skills/.system"
@@ -27,8 +35,14 @@ find_local_skill_source() {
   local name="$1"
   local root=""
   for root in "${CANDIDATE_ROOTS[@]}"; do
-    if [[ -d "${root}/${name}" && -f "${root}/${name}/SKILL.md" ]]; then
+    if [[ -f "${root}/${name}/SKILL.md" ]]; then
       echo "${root}/${name}"
+      return 0
+    fi
+    local found=""
+    found="$(find "${root}" -maxdepth 3 -type f -path "*/${name}/SKILL.md" 2>/dev/null | head -n 1 || true)"
+    if [[ -n "${found}" ]]; then
+      dirname "${found}"
       return 0
     fi
   done
